@@ -1,6 +1,7 @@
 String[] categories;
 ArrayList<String> days, causes;
 ArrayList<Entry> entries;
+float axisLowerX, axisUpperX, axisLowerY, axisUpperY, axisWidth, axisHeight;
 
 void setup() {
   int lineNum = 0;
@@ -48,7 +49,35 @@ void setup() {
     println(entry.numOfLogicErrors);
     println(entry.numOfSyntaxErrors);
   }
+  
+  size(400, 400);
 }
 
 void draw() {
+  drawAxis();
+  
+  drawAxisText();
+}
+
+void drawAxis() {
+  axisLowerX = width*(1.0/12);
+  axisUpperX = width*(11.0/12);
+  axisLowerY = height*(1.0/12);
+  axisUpperY = height*(11.0/12);
+  axisWidth = axisUpperX - axisLowerX;
+  axisHeight = axisUpperY - axisLowerY;
+  line(axisLowerX, axisUpperY, axisUpperX, axisUpperY);
+  line(axisLowerX, axisUpperY, axisLowerX, axisLowerY);
+}
+
+void drawAxisText() {
+  int numOfSections = days.size();
+  
+  textAlign(CENTER, TOP);
+  textSize(width/40);
+  
+  for (int i = 0; i < numOfSections; i++) {
+    float xPos = (((i*(1.0/7))+(1.0/14)) * axisWidth) + axisLowerX;
+    text(days.get(i), xPos, axisUpperY + 5);
+  }
 }
