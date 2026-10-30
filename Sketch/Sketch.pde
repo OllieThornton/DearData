@@ -50,10 +50,10 @@ void readData() {
       categories = lines[i].split(",");
     } else {
       String[] values = lines[i].split(",");
-      String day = values[0];
-      String cause = values[1];
-      int numOfLogicErrors = Integer.parseInt(values[2]);
-      int numOfSyntaxErrors = Integer.parseInt(values[3]);
+      String day = values[0].strip();
+      String cause = values[1].strip();
+      int numOfLogicErrors = Integer.parseInt(values[2].strip());
+      int numOfSyntaxErrors = Integer.parseInt(values[3].strip());
 
       if (!causes.contains(cause)) {
         causes.add(cause);
@@ -83,6 +83,7 @@ void drawAxis() {
 }
 
 void drawAxisText() {
+  fill(0);
   int numOfSections = days.size();
 
   textAlign(CENTER, TOP);
@@ -95,12 +96,26 @@ void drawAxisText() {
 }
 
 void drawEntries() {
+  int[] numOfDays = new int[7];
+  int[] entryProgress = new int[7];
+  
+  for (int i = 0; i < 7; i++) {
+    numOfDays[i] = 0;
+    entryProgress[i] = 0;
+  }
+  
   for (Entry entry : entries) {
-    drawEntry(entry, 5, width/2, height/2);
+    numOfDays[days.indexOf(entry.day)] += 1;
+  }
+  
+  for (Entry entry : entries) {
+    drawEntry(entry, 15, (((days.indexOf(entry.day)*(1.0/7))+(1.0/14)) * axisWidth) + axisLowerX, (((entryProgress[days.indexOf(entry.day)]*(1.0/numOfDays[days.indexOf(entry.day)]))+(1.0/14)) * axisHeight) + axisLowerY);
+    entryProgress[days.indexOf(entry.day)] += 1;
   }
 }
 
 void drawEntry(Entry entry, int size, float x, float y) {
+  ellipseMode(CENTER);
   String day = entry.day;
   String cause = entry.cause;
   int numOfLogicErrors = entry.numOfLogicErrors;
