@@ -61,7 +61,7 @@ void readData() {
 
       entries.add(new Entry(day, cause, numOfLogicErrors, numOfSyntaxErrors));
     }
-  }
+  } 
 }
 
 void generateColours() {
@@ -109,7 +109,7 @@ void drawEntries() {
   }
   
   for (Entry entry : entries) {
-    drawEntry(entry, 15, (((days.indexOf(entry.day)*(1.0/7))+(1.0/14)) * axisWidth) + axisLowerX, (((entryProgress[days.indexOf(entry.day)]*(1.0/numOfDays[days.indexOf(entry.day)]))+(1.0/14)) * axisHeight) + axisLowerY);
+    drawEntry(entry, 15, (((days.indexOf(entry.day)*(1.0/7))+(1.0/14)) * axisWidth) + axisLowerX,(entryProgress[days.indexOf(entry.day)]*(1.0/(numOfDays[days.indexOf(entry.day)] - 1)) * (axisHeight - 15)) + (1.2 * axisLowerY));
     entryProgress[days.indexOf(entry.day)] += 1;
   }
 }
